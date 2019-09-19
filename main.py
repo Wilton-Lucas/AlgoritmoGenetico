@@ -13,14 +13,15 @@ TAMTABULEIRO = 40
 
 solucaoEncontrada = False
 individuo = []
-posFruta = [30,-38] #considerando uma matriz 5x5
+posInicialIndividuo= [30,-38]
+posFruta = [0,0] #considerando uma matriz 5x5
 
 def fitness(indv):
-	global  posFruta, posicaoRelativa, movimentos, solucaoEncontrada
+	global  posFruta, posicaoRelativa, movimentos, solucaoEncontrada, posInicialIndividuo
 	
 	count = 0
 	#calcula a posição final do individuo
-	posFinalIndividuo=[0,0]
+	posFinalIndividuo=posInicialIndividuo[0:]
 	distancia = (((posFruta[0]-posFinalIndividuo[0])**2) + ((posFruta[1]-posFinalIndividuo[1])**2))** 0.5	
 	for mov in indv:
 		#verifica colisão
@@ -43,9 +44,9 @@ def fitness(indv):
 	return count	
 
 def getMelhorMovimento(indv, pos):
-	global  posFruta, posicaoRelativa, movimentos, QTDMOVIMENTOS
+	global  posFruta, posicaoRelativa, movimentos, QTDMOVIMENTOS, posInicialIndividuo
 	melhorMovimento = 0
-	posFinalIndividuo=[0,0]
+	posFinalIndividuo=posInicialIndividuo[0:]
 	distancia = (((posFruta[0]-posFinalIndividuo[0])**2) + ((posFruta[1]-posFinalIndividuo[1])**2))** 0.5	 
 	for m in movimentos:
 		indv = indv[0:pos-1]+[m]+indv[pos:QTDMOVIMENTOS-1]
@@ -66,9 +67,9 @@ def getMelhorMovimento(indv, pos):
 			
 
 def getPosPrimeiroSuspeito(indv):
-	global  posFruta, posicaoRelativa, movimentos
+	global  posFruta, posicaoRelativa, movimentos, posInicialIndividuo
 	pos = 0
-	posFinalIndividuo=[0,0]
+	posFinalIndividuo=posInicialIndividuo[0:]
 	distancia = (((posFruta[0]-posFinalIndividuo[0])**2) + ((posFruta[1]-posFinalIndividuo[1])**2))** 0.5	
 	for mov in indv:
 		posFinalIndividuo[0] += posicaoRelativa[movimentos.index(mov)][0] #atualizando x
@@ -97,7 +98,7 @@ def gerarNovoIndividuo():
 	
 	#fazer 1 mutação no primeiro individuo
 	
-	novoIndividuo[getPosPrimeiroSuspeito(individuo)] = movimentos[randint(0,7)]
+	novoIndividuo[randint(getPosPrimeiroSuspeito(individuo), QTDMOVIMENTOS-1)] = movimentos[randint(0,7)]
 	
 	individuoFilho2 = novoIndividuo[0:]
 	
