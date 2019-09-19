@@ -8,13 +8,13 @@ movimentos = ['←','↑','→','↓','↖','↗','↘','↙']
 posicaoRelativa = [[-1,0],[0,1],[1,0],[0,-1],[-1,1],[1,1],[1,-1],[-1,-1]]
 
 #definição do ambiente e quantidade de movimentos (genes)
-QTDMOVIMENTOS = 39
-TAMTABULEIRO = 40
+QTDMOVIMENTOS = 0 #valor definido na chamada do metódo baseado no calculo da distância de manhattan
+TAMTABULEIRO = 1500
 
 solucaoEncontrada = False
 individuo = []
 posInicialIndividuo= [30,-38]
-posFruta = [0,0] #considerando uma matriz 5x5
+posFruta = [1024,-640] #considerando uma matriz 5x5
 
 def fitness(indv):
 	global  posFruta, posicaoRelativa, movimentos, solucaoEncontrada, posInicialIndividuo
@@ -119,6 +119,9 @@ def gerarNovoIndividuo():
 def main():
 	global individuo, solucaoEncontrada, movimentos, QTDMOVIMENTOS
 	
+	#definição da quantidade de movimentos mínimos
+	QTDMOVIMENTOS = abs(posFruta[0] - posInicialIndividuo[0]) + abs(posFruta[1] - posInicialIndividuo[1]) 
+
 	#gerar primeiro indivíduo aleatório
 	for i in range(QTDMOVIMENTOS):
 		individuo.append(str(movimentos[randint(0,7)]))
