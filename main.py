@@ -3,13 +3,14 @@
 
 
 from random import randint
+import game as simulador
 
 movimentos = ['←','↑','→','↓','↖','↗','↘','↙']
 posicaoRelativa = [[-1,0],[0,-1],[1,0],[0,1],[-1,-1],[1,-1],[1,1],[-1,1]]
 
 #definição do ambiente e quantidade de movimentos (genes)
 QTDMOVIMENTOS = 0 #valor definido na função main baseado no calculo da distância de manhattan
-TAMTABULEIRO = [5,5] #definição da matriz do jogo.
+TAMTABULEIRO = [50,50] #definição da matriz do jogo.
 
 solucaoEncontrada = False
 QTDMOVIMENTOSSOLUCAO = 0
@@ -29,8 +30,8 @@ individuo = []
 
 '''
 #posições dos elementos do jogo (pacman, fruta)
-posInicialIndividuo= [2,4] #posição do pacman
-posFruta = [3,3]  #posição da fruta
+posInicialIndividuo= [0,0] #posição do pacman
+posFruta = [49,49]  #posição da fruta
 
 
 
@@ -193,6 +194,10 @@ def main():
 		#exibir solução
 		print('\n___________________________________________\n')
 		print('ger.: '+str(geracao)+' Indv.: '+str(individuo[0:QTDMOVIMENTOSSOLUCAO]) + ' fit: '+str(fitness(individuo))+' stp: '+str(QTDMOVIMENTOSSOLUCAO))
+	
+		simulador.simular(TAMTABULEIRO, posInicialIndividuo, posFruta, individuo[0:QTDMOVIMENTOSSOLUCAO])
+		simulador.finalizar()
+	
 	else:
 		print('posições dos objetos inválidas!')
 if __name__ == '__main__':
